@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 function Navbar() {
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
+  
 
   const navigate = useNavigate()
 
@@ -47,16 +47,16 @@ function Navbar() {
 
       {/* Login */}
       {!user ? <li>
-        <Link to={'/login'}>Signup</Link>
+        <Link to={'/login'}>Login</Link>
       </li> : ""}
 
       {/* User */}
-      {user.role === "user" && <li>
+      {user && user.role === "user" && <li>
         <Link to={'/user-dashboard'}>{user.name}</Link>
       </li>}
 
       {/* Admin */}
-      {user.role === "admin" && <li>
+      {user && user.role === "admin" && <li>
         <Link to={'/admin-dashboard'}>{user.name}</Link>
       </li>}
 
