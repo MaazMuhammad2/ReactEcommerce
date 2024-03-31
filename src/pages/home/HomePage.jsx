@@ -21,7 +21,7 @@ function HomePage() {
       <HomePageProductCard />
       <Track />
       <Testimonial />
-      <Loader/>
+      {/* <Loader/> */}
       {/* <h1>
         {name}
       </h1> */}

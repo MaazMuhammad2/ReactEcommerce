@@ -1,8 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SearchBar from '../searchBar/SearchBar'
+import { useSelector } from 'react-redux';
 
 function Navbar() {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user)
+
+  const navigate = useNavigate()
+
+  const logout = () => {
+    localStorage.clear('user')
+    navigate('/login')
+  }
+
+  // navlist data
+  const cartItems = useSelector((state) => state.cart)
+
+
+  // const userLinks = user && (
+  //   <li>
+  //     <Link to={user.role === "user" ? '/user-dashboard' : '/admin-dashboard'}>
+  //       {user.name}
+  //     </Link>
+  //   </li>
+  // );
 
   // navList Data
   const navList = (
@@ -18,38 +41,37 @@ function Navbar() {
       </li>
 
       {/* Signup */}
-      <li>
+      {!user ? <li>
         <Link to={'/signup'}>Signup</Link>
-      </li>
+      </li> : ""}
 
-      {/* Signup */}
-      <li>
-        <Link to={'/login'}>Login</Link>
-      </li> :
+      {/* Login */}
+      {!user ? <li>
+        <Link to={'/login'}>Signup</Link>
+      </li> : ""}
 
       {/* User */}
-      <li>
-        <Link to={'/user-dashboard'}>User</Link>
-      </li>
+      {user.role === "user" && <li>
+        <Link to={'/user-dashboard'}>{user.name}</Link>
+      </li>}
 
       {/* Admin */}
-      <li>
-        <Link to={'/admin-dashboard'}>Admin</Link>
-      </li>
+      {user.role === "admin" && <li>
+        <Link to={'/admin-dashboard'}>{user.name}</Link>
+      </li>}
 
       {/* logout */}
-      {/* {user && <li className=" cursor-pointer" onClick={logout}>
-                logout
-            </li>} */}
+      {user && <li className=" cursor-pointer" onClick={logout}>
+        logout
+      </li>}
 
       {/* Cart */}
       <li>
         <Link to={'/cart'}>
-          Cart(0)
+          Cart({cartItems.length})
         </Link>
       </li>
     </ul>)
-
 
   return (
     <nav className="bg-pink-600 sticky top-0 w-100">
@@ -58,7 +80,7 @@ function Navbar() {
         {/* left  */}
         <div className="left py-3 lg:py-0">
           <Link to={'/'}>
-            <h2 className="font-bold text-white text-2xl text-center">E-Bharat</h2>
+            <h2 className="font-bold text-white text-2xl text-center">E-Pakistan</h2>
           </Link>
         </div>
 
